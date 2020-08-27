@@ -1,18 +1,18 @@
 #include <assert.h>
-bool BPM(float bpm)
+bool bpmisNotOk(float bpm)
 {
     return (bpm < 70 || bpm > 150);
 }
-bool SPO2(float spo2)
+bool spo2isNotOk(float spo2)
 {
     return (spo2 < 90);
 }
-bool RespRate(float respRate)
+bool RespRateisNotOk(float respRate)
 {
     return (respRate < 30 || respRate > 95);
 }
 bool vitalsAreOk(float bpm, float spo2, float respRate) {
-    bool result = BPM(bpm) || SPO2(spo2) || RespRate(respRate);
+    bool result = bpmisNotOk(bpm) || spo2isNotOk(spo2) || RespRateisNotOk(respRate);
     return !result;
 }
 
