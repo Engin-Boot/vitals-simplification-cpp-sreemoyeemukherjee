@@ -10,8 +10,10 @@ bool vitalsAreOk(float bpm, float spo2, float respRate) {
 }
 
 int main() {
+  assert(isInsideLimits(80, 70, 150) == true);  //  in range
+  assert(isInsideLimits(60, 70, 150) == false); //  outside lower limit
+  assert(isInsideLimits(160, 70, 150) == false); // outside higher limit 
+  cout << "All OK!";
   assert(vitalsAreOk(80, 95, 60) == true);
-  assert(vitalsAreOk(60, 95, 40) == false);
-  assert(vitalsAreOk(80, 85, 60) == false);
-  assert(vitalsAreOk(80, 85, 125) == false);
-}
+  assert(vitalsAreOk(60, 90, 40) == false);
+  }
