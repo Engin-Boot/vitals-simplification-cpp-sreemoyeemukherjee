@@ -15,12 +15,5 @@ int main() {
   assert(isInsideLimits(160, 70, 150) == false); // outside higher limit 
   cout << "All OK!";
   assert(vitalsAreOk(80, 95, 60) == true);
-<<<<<<< HEAD
   assert(vitalsAreOk(60, 90, 40) == false);
   }
-=======
-  assert(vitalsAreOk(60, 95, 40) == false);
-  assert(vitalsAreOk(80, 85, 60) == false);
-  assert(vitalsAreOk(80, 95, 125) == false);
-}
->>>>>>> d01d20eb089df030544671be8d5b3c2de4af92d8
