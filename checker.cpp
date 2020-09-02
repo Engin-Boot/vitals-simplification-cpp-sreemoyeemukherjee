@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <iostream>
-
+#include <vector>
+using namespace std;
 class AlertInterface
 {
   public:
@@ -65,19 +66,22 @@ class RangeChecker
 
 class VitalsIntegrator
 {
-  private:
-    RangeChecker bpmChecker, spo2Checker, respChecker;
-  public:
-    VitalsIntegrator(AlertInterface* alertPtr): 
-      bpmChecker("pulse rate", 70, 150, alertPtr),
-      spo2Checker("spo2", 90, 101, alertPtr),
-      respChecker("resp rate", 30, 95, alertPtr)
-    {}
-    void checkAllVitals(float bpm, float spo2, float respRate)
+private:
+    vector<RangeChecker> VitalUnits;
+    public:
+    VitalsIntegrator(AlertInterface* alertPtr)
     {
-      bpmChecker.checkAgainstRange(bpm);
-      spo2Checker.checkAgainstRange(spo2);
-      respChecker.checkAgainstRange(respRate);
+        RangeChecker r1("pulse rate", 70, 150, alertPtr), r2("spo2", 90, 101, alertPtr), r3("resp rate", 30, 95, alertPtr);
+        VitalUnits.push_back(r1);
+        VitalUnits.push_back(r2);
+        VitalUnits.push_back(r3);
+    }
+    void checkAllVitals(const vector<float>& units)
+    {
+        for (int i = 0; i < units.size(); i++)
+        {
+            VitalUnits[i].checkAgainstRange(units[i]);
+        }
     }
 };
 
@@ -87,12 +91,12 @@ int main() {
   alerter1 = new AlertWithSMS;          // Alert with SMS
   VitalsIntegrator vitals1(alerter1);
   
-  vitals1.checkAllVitals(80, 95, 60);       // All OK condition
-  vitals1.checkAllVitals(60, 90, 140);      // pulse rate 'too low', resp rate 'too high' 
+  vitals1.checkAllVitals({80, 95, 60});       // All OK condition
+  vitals1.checkAllVitals({60, 90, 140 });      // pulse rate 'too low', resp rate 'too high' 
 
   AlertInterface* alerter2;             
   alerter2 = new AlertWithSound;        // Alert with Sound
   VitalsIntegrator vitals2(alerter2);
-  vitals2.checkAllVitals(160, 95, 60);      // pulse rate 'too high'
+  vitals2.checkAllVitals({ 160, 95, 60 });      // pulse rate 'too high'
 
 }
